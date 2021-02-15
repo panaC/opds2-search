@@ -1,0 +1,6 @@
+{
+  "query": "hello", 
+  "field": ["title", "des"],
+  "data": [{"id":1, "title":"world", "des": ""}, {"id":2, "title":"hello", "des": ""}],
+  "raw": true
+}

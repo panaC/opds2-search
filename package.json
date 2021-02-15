@@ -2,9 +2,10 @@
   "name": "indexer",
   "version": "1.0.0",
   "description": "indexer microservice",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "functions-framework --target=indexer"
   },
   "repository": {
     "type": "git",
@@ -17,6 +18,7 @@
   },
   "homepage": "https://github.com/panaC/indexer#readme",
   "dependencies": {
+    "@google-cloud/functions-framework": "^1.7.1",
     "elasticlunr-idream": "^0.9.8"
   }
 }
