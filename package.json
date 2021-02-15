@@ -1,0 +1,22 @@
+{
+  "name": "indexer",
+  "version": "1.0.0",
+  "description": "indexer microservice",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/panaC/indexer.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/panaC/indexer/issues"
+  },
+  "homepage": "https://github.com/panaC/indexer#readme",
+  "dependencies": {
+    "elasticlunr-idream": "^0.9.8"
+  }
+}
