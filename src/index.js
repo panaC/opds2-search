@@ -55,7 +55,7 @@ const fn = (req, res) => {
       break;
     case 'OPTIONS':
       // Send response to OPTIONS requests
-      res.set('Access-Control-Allow-Methods', 'GET');
+      res.set('Access-Control-Allow-Methods', 'POST, OPTIONS');
       res.set('Access-Control-Allow-Headers', 'Content-Type');
       res.set('Access-Control-Max-Age', '3600');
       res.status(204).json({});
