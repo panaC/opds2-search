@@ -19,6 +19,8 @@
   "homepage": "https://github.com/panaC/indexer#readme",
   "dependencies": {
     "@google-cloud/functions-framework": "^1.7.1",
-    "elasticlunr-idream": "^0.9.8"
+    "elasticlunr-idream": "^0.9.8",
+    "node": "^15.10.0",
+    "node-fetch": "^2.6.1"
   }
 }

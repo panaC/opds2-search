@@ -1,55 +1,73 @@
 
+const { ok } = require("assert");
 const { search } = require("./search");
+const fetch = require('node-fetch');
 
-const fn = (req, res) => {
+const fn = async (req, res) => {
 
- switch (req.method) {
+  switch (req.method) {
     case 'GET':
-      res.status(404).json({status: "error", message: 'POST request expected'});
+      // res.status(404).json({status: "error", message: 'POST request expected'});
+
+      const { url, title, query, q } = req.query;
+
+      ok(typeof url === "string", "url param not a string");
+      ok(typeof q === "string" || typeof query === "string", "query param not a string");
+
+      const response = await fetch(url).then((res))
+      const json = await response.json();
+
+      ok(Array.isArray(json?.publications));
+
+      console.log(json?.publications);
+      console.log(query || q);
+
+      const resSearch = search(json.publications, query || q);
+
+      console.log("found", resSearch);
+
+      const pubsFound = resSearch.map((v) => json.publications[v]).filter((v) => !!v);
+
+      const feed = {
+        metadata: {
+          title: title || "opds search from " + url,
+        },
+        publications: pubsFound,
+      };
+
+      res.status(200).json(feed);
+
+
       break;
     case 'PUT':
-      res.status(403).json({status: "error", message: 'POST request expected'});
+      res.status(403).json({ status: "error", message: 'POST request expected' });
       break;
     case 'POST':
 
       switch (req.get('content-type')) {
         case 'application/json':
           const body = req.body;
-          const query = req.query; // not used ?
+          const { title, query, q } = req.query;
 
-          if (typeof body?.query !== "string"){
+          ok(typeof q === "string" || typeof query === "string", "query param not a string");
+          ok(Array.isArray(body), "body is not an array of opdsPublications");
 
-            res.status(400).json({status: "error", message: "body.query is not a string : "});
-          } else if (!Array.isArray(body?.data)) {
+          const resSearch = search(body, query || q);
 
-            res.status(400).json({status: "error", message: "body.data is not an array"});
-          } else if (
-              !Array.isArray(body?.field) &&
-              !body.field.reduce((pv, cv) => pv && typeof cv === "string", true)
-              ) {
+          const pubsFound = resSearch.map((v) => json.publications[v]).filter((!!v));
 
-            res.status(400).json({status: "error", message: "body.field array with some value which is not a string"});
-          } else {
+          const feed = {
+            metadata: {
+              title: title || "opds search from " + url,
+            },
+            publications: pubsFound,
+          };
 
-            body.data = body.data.map((v) => {
-              for (key in v) {
-                if (!(typeof v[key] === "string" || typeof v[key] === "number")) {
-                  delete v[key];
-                }
-              }
+          res.status(200).json(feed);
 
-              return v;
-            }).filter((v) => {
-                const keys = Object.keys(v);
-                return body.field.every(v => keys.includes(v));
-            });
-
-            const resArray = search(body) || []; 
-            res.status(200).json(resArray);
-          }
           break;
         default:
-          res.status(400).json({status: "error", message: "body content-type"});
+          res.status(400).json({ status: "error", message: "body content-type" });
       }
 
       break;
@@ -61,7 +79,7 @@ const fn = (req, res) => {
       res.status(204).json({});
       break;
     default:
-      res.status(405).json({status: "error", message: "undefined method"});
+      res.status(405).json({ status: "error", message: "undefined method" });
       break;
   }
 
@@ -76,15 +94,17 @@ const fn = (req, res) => {
  * @param {Object} res Cloud Function response context.
  *                     More info: https://expressjs.com/en/api.html#res
  */
-exports.indexer = (req, res) => {
+exports.indexer = async (req, res) => {
 
   res.set('Access-Control-Allow-Origin', '*');
 
   try {
 
-    return fn(req, res);
+    return await fn(req, res);
   } catch (e) {
 
-      res.status(500).json({status: "error", message: e.toString()});
+    console.log(e);
+
+    res.status(500).json({ status: "error", message: e.toString() });
   }
 };
