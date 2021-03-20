@@ -1,10 +1,10 @@
-# indexer
+# opds2 search microservice
 
+indexer micro-service
 
-indexer microservice
+https://europe-west1-audiobooks-a6348.cloudfunctions.net/indexer
 
-
-https://europe-west1-indexer-304913.cloudfunctions.net/indexer
+https://europe-west1-audiobooks-a6348.cloudfunctions.net/indexer?url=https://storage.googleapis.com/audiobook_edrlab/navigation/all.json&query=pergaud
 
 
 ## local quickstart
