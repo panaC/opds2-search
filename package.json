@@ -18,9 +18,8 @@
   },
   "homepage": "https://github.com/panaC/indexer#readme",
   "dependencies": {
-    "@google-cloud/functions-framework": "^1.7.1",
+    "@google-cloud/functions-framework": "^1.9.0",
     "lunr": "^2.3.9",
-    "node": "^15.10.0",
-    "node-fetch": "^2.6.1"
+    "node-fetch": "^2.6.5"
   }
 }

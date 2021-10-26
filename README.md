@@ -16,4 +16,4 @@ https://github.com/GoogleCloudPlatform/functions-framework-nodejs
 
 ---
 
-gcloud functions deploy indexer --runtime nodejs14 --trigger-http --allow-unauthenticated
+gcloud functions deploy indexer --runtime nodejs14 --trigger-http --allow-unauthenticated --region=europe-west1
